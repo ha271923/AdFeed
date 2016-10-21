@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.yahoo.mobile.client.android.yodel.platform.YahooAD.FLURRY_ADSPACE;
+
 /**
  * <p>Handles fetching, caching, and destroying of native gemini ads.</p>
  *
@@ -74,7 +76,7 @@ public class NativeAdFetcher {
 
         @Override
         public void onCloseFullscreen(FlurryAdNative adNative) {
-            AnalyticsHelper.logEvent(AnalyticsHelper.EVENT_AD_CLOSEBUTTON_CLICK, null, false);
+            FeedApplication.yahooAD.logEvent(FeedApplication.yahooAD.EVENT_AD_CLOSEBUTTON_CLICK, null, false);
         }
 
         @Override
@@ -82,7 +84,7 @@ public class NativeAdFetcher {
 
         @Override
         public void onClicked(FlurryAdNative adNative) {
-            AnalyticsHelper.logEvent(AnalyticsHelper.EVENT_STREAM_AD_CLICK, null, false);
+            FeedApplication.yahooAD.logEvent(FeedApplication.yahooAD.EVENT_STREAM_AD_CLICK, null, false);
         }
 
         @Override
@@ -214,7 +216,7 @@ public class NativeAdFetcher {
         if (context != null) {
             Log.i(LOG_TAG, "Fetching Ad now");
             FlurryAdNative nativeAd = new FlurryAdNative(
-                    context, NativeTestAppApplication.FLURRY_ADSPACE);
+                    context, FLURRY_ADSPACE);
             nativeAd.setListener(mAdNativeListener);
             mFetchingAdsList.add(nativeAd);
             nativeAd.fetchAd();

@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.flurry.android.ads.FlurryAdNative;
 import com.flurry.android.ads.FlurryAdNativeAsset;
+import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.R;
 import com.yahoo.mobile.client.android.yodel.feed.TumblrFeedManager;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
@@ -144,10 +145,10 @@ public class PostDetailFragment extends Fragment {
                 // Log the event
                 HashMap<String, String> eventParams = new HashMap<>(2);
                 eventParams.put(
-                        AnalyticsHelper.PARAM_ARTICLE_ORIGIN, mPost.getBlogName());
-                eventParams.put(AnalyticsHelper.PARAM_ARTICLE_TYPE, mPost.getType());
-                AnalyticsHelper.logEvent(
-                        AnalyticsHelper.EVENT_CAR_MOREIMG_CLICK, eventParams, false);
+                        FeedApplication.yahooAD.PARAM_ARTICLE_ORIGIN, mPost.getBlogName());
+                eventParams.put(FeedApplication.yahooAD.PARAM_ARTICLE_TYPE, mPost.getType());
+                FeedApplication.yahooAD.logEvent(
+                        FeedApplication.yahooAD.EVENT_CAR_MOREIMG_CLICK, eventParams, false);
 
         }
         return super.onOptionsItemSelected(item);
@@ -250,10 +251,10 @@ public class PostDetailFragment extends Fragment {
                         public void onClick(View v) {
                             HashMap<String, String> eventParams = new HashMap<>(2);
                             eventParams.put(
-                                    AnalyticsHelper.PARAM_ARTICLE_ORIGIN, mPost.getBlogName());
-                            eventParams.put(AnalyticsHelper.PARAM_ARTICLE_TYPE, mPost.getType());
-                            AnalyticsHelper.logEvent(
-                                    AnalyticsHelper.EVENT_CAR_MOREIMG_CLICK, eventParams, false);
+                                    FeedApplication.yahooAD.PARAM_ARTICLE_ORIGIN, mPost.getBlogName());
+                            eventParams.put(FeedApplication.yahooAD.PARAM_ARTICLE_TYPE, mPost.getType());
+                            FeedApplication.yahooAD.logEvent(
+                                    FeedApplication.yahooAD.EVENT_CAR_MOREIMG_CLICK, eventParams, false);
                             
                             mCallbackHandler.onPostImagesSelected(
                                     ((PhotoPost) mPost).getPhotos(), mPostImageView);

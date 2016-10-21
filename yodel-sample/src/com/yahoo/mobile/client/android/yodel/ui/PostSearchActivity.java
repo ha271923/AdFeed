@@ -27,6 +27,7 @@ import android.text.Html;
 import android.view.View;
 
 import com.google.gson.Gson;
+import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.R;
 
 import com.tumblr.jumblr.types.Post;
@@ -52,8 +53,8 @@ public class PostSearchActivity extends ActionBarActivity implements PostListFra
             String searchQuery = intent.getStringExtra(SearchManager.QUERY);
 
             HashMap<String, String> eventParam = new HashMap<>(1);
-            eventParam.put(AnalyticsHelper.PARAM_SEARCH_TERM, searchQuery);
-            AnalyticsHelper.logEvent(AnalyticsHelper.EVENT_SEARCH_STARTED, eventParam, false);
+            eventParam.put(FeedApplication.yahooAD.PARAM_SEARCH_TERM, searchQuery);
+            FeedApplication.yahooAD.logEvent(FeedApplication.yahooAD.EVENT_SEARCH_STARTED, eventParam, false);
 
             doTumblrTagSearch(searchQuery);
             setTitle(Html.fromHtml(getString(R.string.title_search_query, searchQuery)));
@@ -70,9 +71,9 @@ public class PostSearchActivity extends ActionBarActivity implements PostListFra
     public void onPostSelected(Post post, int positionId, View clickedView) {
         // Log the event
         HashMap<String, String> eventParams = new HashMap<>(2);
-        eventParams.put(AnalyticsHelper.PARAM_ARTICLE_ORIGIN, post.getBlogName());
-        eventParams.put(AnalyticsHelper.PARAM_ARTICLE_TYPE, post.getType());
-        AnalyticsHelper.logEvent(AnalyticsHelper.EVENT_SEARCH_RESULT_CLICK, eventParams, false);
+        eventParams.put(FeedApplication.yahooAD.PARAM_ARTICLE_ORIGIN, post.getBlogName());
+        eventParams.put(FeedApplication.yahooAD.PARAM_ARTICLE_TYPE, post.getType());
+        FeedApplication.yahooAD.logEvent(FeedApplication.yahooAD.EVENT_SEARCH_RESULT_CLICK, eventParams, false);
         
         /*
          To avoid a StackOverflowError from a circular reference during serialization, set the

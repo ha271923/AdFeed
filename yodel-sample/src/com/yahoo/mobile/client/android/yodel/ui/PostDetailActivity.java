@@ -29,6 +29,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.R;
 import com.yahoo.mobile.client.android.yodel.feed.TumblrFeedManager;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
@@ -59,7 +60,7 @@ public class PostDetailActivity extends ActionBarActivity
 
                 @Override
                 public void onPageSelected(int position) {
-                    AnalyticsHelper.logEvent(AnalyticsHelper.EVENT_CAR_CONTENT_SWIPE, null, false);
+                    FeedApplication.yahooAD.logEvent(AnalyticsHelper.EVENT_CAR_CONTENT_SWIPE, null, false);
                 }
 
                 @Override

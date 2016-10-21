@@ -23,7 +23,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
-import com.yahoo.mobile.client.android.yodel.NativeTestAppApplication;
+import com.yahoo.mobile.client.android.yodel.FeedApplication;
 
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -125,7 +125,7 @@ public class ImageLoader {
                     return;
                 }
 
-                NativeTestAppApplication.getInstance().getMainThreadHandler().post(new Runnable() {
+                FeedApplication.getInstance().getMainThreadHandler().post(new Runnable() {
                     @Override
                     public void run() {
                         setImageViewBitmap(imageViewToLoad, bmp);

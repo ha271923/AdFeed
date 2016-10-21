@@ -29,12 +29,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.R;
 import com.tumblr.jumblr.types.Post;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
-import com.yahoo.mobile.client.share.search.suggest.SearchSuggestController;
-
-import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity implements PostListFragment.Callbacks {
 
@@ -88,8 +86,8 @@ public class MainActivity extends ActionBarActivity implements PostListFragment.
             searchView.setOnSearchClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AnalyticsHelper.logEvent(
-                            AnalyticsHelper.EVENT_STREAM_SEARCH_CLICK, null, false);
+                    FeedApplication.yahooAD.logEvent(
+                            FeedApplication.yahooAD.EVENT_STREAM_SEARCH_CLICK, null, false);
                 }
             });
         }
@@ -115,11 +113,8 @@ public class MainActivity extends ActionBarActivity implements PostListFragment.
 
     @Override
     public void onPostSelected(Post post, int positionId, View clickedView) {
-        // Log the event
-        HashMap<String, String> eventParams = new HashMap<>(2);
-        eventParams.put(AnalyticsHelper.PARAM_ARTICLE_ORIGIN, post.getBlogName());
-        eventParams.put(AnalyticsHelper.PARAM_ARTICLE_TYPE, post.getType());
-        AnalyticsHelper.logEvent(AnalyticsHelper.EVENT_STREAM_ARTICLE_CLICK, eventParams, false);
+
+        FeedApplication.yahooAD.onPostSelected_LogEvent(post,positionId,clickedView);
 
         Intent intent = new Intent(this, PostDetailActivity.class);
         intent.putExtra(PostDetailActivity.EXTRA_CURRENT_PAGE_INDEX, positionId);

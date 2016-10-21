@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.R;
 import com.yahoo.mobile.client.android.yodel.ui.widgets.adapters.PostSearchListAdapter;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
@@ -65,7 +66,7 @@ public class PostListFragment extends ListFragment
 
     private final static int LOADER_ID_LOAD_RECENT_POSTS = 0x1;
     private final static int LOADER_ID_LOAD_POSTS_WITH_TAGS = 0x2;
-    private final static String EXTRA_TAG_QUERY = "com.yahoo.mobile.sample.extra.tagquery";
+
 
     static PostListFragment newInstance() {
         return new PostListFragment();
@@ -74,7 +75,7 @@ public class PostListFragment extends ListFragment
     static PostListFragment newInstance(String tagQuery) {
         PostListFragment fragment = new PostListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(EXTRA_TAG_QUERY, tagQuery);
+        bundle.putString(FeedApplication.yahooAD.EXTRA_TAG_QUERY, tagQuery);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -87,7 +88,7 @@ public class PostListFragment extends ListFragment
         if (savedInstanceState == null) {
             Bundle args = getArguments();
             if (args != null) {
-                mTagQuery = args.getString(EXTRA_TAG_QUERY);
+                mTagQuery = args.getString(FeedApplication.yahooAD.EXTRA_TAG_QUERY);
             }
         }
     }
@@ -105,8 +106,7 @@ public class PostListFragment extends ListFragment
             @Override
             public void onRefresh() {
                 // Log a timed event
-                AnalyticsHelper.logEvent(AnalyticsHelper.EVENT_STREAM_PULL_REFRESH, null, true);
-                
+                FeedApplication.yahooAD.logEvent(FeedApplication.yahooAD.EVENT_STREAM_PULL_REFRESH, null, true);
                 mSwipeView.setRefreshing(true);
                 refreshPosts();
             }
@@ -146,8 +146,7 @@ public class PostListFragment extends ListFragment
         int actionBarSize = (int) styledAttributes.getDimension(0, 0);
         styledAttributes.recycle();
         int mediumViewMargin = getResources().getDimensionPixelSize(R.dimen.view_margin_medium);
-        int lvTopPadding = mediumViewMargin +
-                actionBarSize;
+        int lvTopPadding = mediumViewMargin + actionBarSize;
         getListView().setPadding(0, lvTopPadding, 0, mediumViewMargin);
         mSwipeView.setProgressViewOffset(true, mediumViewMargin, lvTopPadding);
     }
@@ -206,9 +205,9 @@ public class PostListFragment extends ListFragment
                 if (position + 1 > mPostSearchListAdapter.getCount()) {
                     // The search footer was clicked. Log the event and open the Search SDK
                     HashMap<String, String> eventParam = new HashMap<>(1);
-                    eventParam.put(AnalyticsHelper.PARAM_SEARCH_TERM, mTagQuery);
-                    AnalyticsHelper.logEvent(
-                            AnalyticsHelper.EVENT_SEARCH_MOREONWEB_CLICK, eventParam, false);
+                    eventParam.put(FeedApplication.yahooAD.PARAM_SEARCH_TERM, mTagQuery);
+                    FeedApplication.yahooAD.logEvent(
+                            FeedApplication.yahooAD.EVENT_SEARCH_MOREONWEB_CLICK, eventParam, false);
                     
                     Intent i = new Intent(getActivity(), SearchActivity.class);
                     i.putExtra(SearchActivity.QUERY_STRING, mTagQuery);
@@ -262,7 +261,7 @@ public class PostListFragment extends ListFragment
         }
         if (mSwipeView.isRefreshing()) {
             HashMap<String, String> eventParams = new HashMap<>(1);
-            eventParams.put(AnalyticsHelper.PARAM_CONTENT_LOADED, String.valueOf(contentLoaded));
+            eventParams.put(FeedApplication.yahooAD.PARAM_CONTENT_LOADED, String.valueOf(contentLoaded));
             AnalyticsHelper.endTimedEvent(AnalyticsHelper.EVENT_STREAM_PULL_REFRESH, eventParams);
             mSwipeView.setRefreshing(false);
         }

@@ -25,6 +25,8 @@ import com.yahoo.mobile.client.android.yodel.NativeAdFetcher;
 
 import java.util.List;
 
+import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
+
 /**
  * Adapter that has common functionality for any adapters that need to show ads in-between
  * other data.
@@ -133,12 +135,7 @@ abstract class BaseAdAdapter implements NativeAdFetcher.AdNativeListener {
      * @param view the {@link View} to load the asset into
      */
     protected void loadAdAssetInView(FlurryAdNative adNative, String assetName, View view) {
-        FlurryAdNativeAsset adNativeAsset = adNative.getAsset(assetName);
-        if (adNativeAsset != null) {
-            adNativeAsset.loadAssetIntoView(view);
-        } else {
-            view.setVisibility(View.GONE);
-        }
+        yahooAD.loadAdAssetInView(adNative,assetName,view);
     }
 
     /**

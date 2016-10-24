@@ -28,7 +28,7 @@ public class MemoryCache {
 
     public MemoryCache() {
         int cacheSize = 10 * 1024 * 1024 / 1024;  // 10 mB
-        Log.i(LOG_TAG, "Image cache size: " + cacheSize + "kB");
+        SMLog.i(LOG_TAG, "Image cache size: " + cacheSize + "kB");
 
         mCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override

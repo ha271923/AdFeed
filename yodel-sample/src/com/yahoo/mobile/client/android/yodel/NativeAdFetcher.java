@@ -24,6 +24,7 @@ import com.flurry.android.ads.FlurryAdNative;
 import com.flurry.android.ads.FlurryAdNativeListener;
 import com.flurry.android.ads.FlurryAdTargeting;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
+import com.yahoo.mobile.client.android.yodel.utils.SMLog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 import static com.yahoo.mobile.client.android.yodel.platform.YahooAD.FLURRY_ADSPACE;
 
 /**
@@ -57,7 +59,7 @@ public class NativeAdFetcher {
     private FlurryAdNativeListener mAdNativeListener = new FlurryAdNativeListener() {
         @Override
         public synchronized void onFetched(FlurryAdNative adNative) {
-            Log.i(LOG_TAG, "onFetched");
+            SMLog.i(LOG_TAG, "onFetched");
             if (canUseThisAd(adNative)) {
                 mPrefetchedAdList.add(adNative);
                 mNoOfFetchedAds++;
@@ -76,7 +78,7 @@ public class NativeAdFetcher {
 
         @Override
         public void onCloseFullscreen(FlurryAdNative adNative) {
-            FeedApplication.yahooAD.logEvent(FeedApplication.yahooAD.EVENT_AD_CLOSEBUTTON_CLICK, null, false);
+            yahooAD.logEvent(yahooAD.EVENT_AD_CLOSEBUTTON_CLICK, null, false);
         }
 
         @Override
@@ -84,7 +86,7 @@ public class NativeAdFetcher {
 
         @Override
         public void onClicked(FlurryAdNative adNative) {
-            FeedApplication.yahooAD.logEvent(FeedApplication.yahooAD.EVENT_STREAM_AD_CLICK, null, false);
+            yahooAD.logEvent(yahooAD.EVENT_STREAM_AD_CLICK, null, false);
         }
 
         @Override
@@ -99,7 +101,7 @@ public class NativeAdFetcher {
         @Override
         public void onError(FlurryAdNative adNative, FlurryAdErrorType adErrorType, int errorCode) {
             if (adErrorType.equals(FlurryAdErrorType.FETCH)) {
-                Log.i(LOG_TAG, "onFetchFailed " + errorCode);
+                SMLog.i(LOG_TAG, "onFetchFailed " + errorCode);
 
                 if (mFetchingAdsList.contains(adNative)) {
                     adNative.destroy(); // destroy the native ad, as we are not going to render it.
@@ -190,7 +192,7 @@ public class NativeAdFetcher {
         }
         mFetchingAdsList.clear();
 
-        Log.i(LOG_TAG, "destroyAllAds adList " + adMapAtIndex.size() + " prefetched " +
+        SMLog.i(LOG_TAG, "destroyAllAds adList " + adMapAtIndex.size() + " prefetched " +
                 mPrefetchedAdList.size() + " fetched " + mFetchingAdsList.size());
 
         mContext.clear();
@@ -214,7 +216,7 @@ public class NativeAdFetcher {
         Context context = mContext.get();
 
         if (context != null) {
-            Log.i(LOG_TAG, "Fetching Ad now");
+            SMLog.i(LOG_TAG, "Fetching Ad now");
             FlurryAdNative nativeAd = new FlurryAdNative(
                     context, FLURRY_ADSPACE);
             nativeAd.setListener(mAdNativeListener);
@@ -222,7 +224,7 @@ public class NativeAdFetcher {
             nativeAd.fetchAd();
         } else {
             mFetchFailCount++;
-            Log.i(LOG_TAG, "Context is null, not fetching Ad");
+            SMLog.i(LOG_TAG, "Context is null, not fetching Ad");
         }
     }
 

@@ -5,6 +5,8 @@ import android.net.http.HttpResponseCache;
 import android.view.View;
 
 import com.flurry.android.FlurryAgent;
+import com.flurry.android.ads.FlurryAdNative;
+import com.flurry.android.ads.FlurryAdNativeAsset;
 import com.tumblr.jumblr.types.Post;
 import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
@@ -43,6 +45,8 @@ public class YahooAD {
     public static final String PARAM_ARTICLE_TYPE = "article_type";
     public static final String PARAM_CONTENT_LOADED = "content_loaded";
     public static final String PARAM_SEARCH_TERM = "search_term";
+    public static final String EXTRA_PHOTO_URL = "com.yahoo.mobile.sample.extra.photourl";
+    public static final String EXTRA_PHOTO_LIST = "com.yahoo.mobile.sample.extra.photolist";
 
     public void InitAdServer(Context context){
         // Init Search SDK
@@ -66,19 +70,25 @@ public class YahooAD {
             FlurryAgent.init(context, FLURRY_APIKEY);
     }
 
-    public void onPostSelected_LogEvent(Post post, int positionId, View clickedView){
-        // Log the event
-        HashMap<String, String> eventParams = new HashMap<>(2);
-        eventParams.put(FeedApplication.yahooAD.PARAM_ARTICLE_ORIGIN, post.getBlogName());
-        eventParams.put(FeedApplication.yahooAD.PARAM_ARTICLE_TYPE, post.getType());
-        AnalyticsHelper.logEvent(AnalyticsHelper.EVENT_STREAM_ARTICLE_CLICK, eventParams, false);
-
-    }
-
     public static void logEvent(String eventName, Map<String, String> eventParams, boolean timed){
         AnalyticsHelper.logEvent(eventName, eventParams, timed);
     }
 
+    public static void logError(String errorId, String errorDescription, Throwable throwable) {
+        FlurryAgent.onError(errorId, errorDescription, throwable);
+    }
 
+    public static void endTimedEvent(String eventName, Map<String, String> eventParams) {
+        AnalyticsHelper.endTimedEvent(eventName, eventParams);
+    }
+
+    public void loadAdAssetInView(FlurryAdNative adNative, String assetName, View view) {
+        FlurryAdNativeAsset adNativeAsset = adNative.getAsset(assetName);
+        if (adNativeAsset != null) {
+            adNativeAsset.loadAssetIntoView(view);
+        } else {
+            view.setVisibility(View.GONE);
+        }
+    }
 
 }

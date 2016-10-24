@@ -25,16 +25,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.yahoo.mobile.client.android.yodel.R;
+import com.yahoo.mobile.client.android.yodel.platform.YahooAD;
 import com.yahoo.mobile.client.android.yodel.utils.ImageLoader;
 
-public class FullImageFragment extends Fragment {
+import static com.yahoo.mobile.client.android.yodel.platform.YahooAD.EXTRA_PHOTO_URL;
 
-    private final static String EXTRA_PHOTO_URL = "com.yahoo.mobile.sample.extra.photourl";
+public class FullImageFragment extends Fragment {
 
     public static FullImageFragment newInstance(String photoUrl) {
         FullImageFragment fragment = new FullImageFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(EXTRA_PHOTO_URL, photoUrl);
+        bundle.putString(YahooAD.EXTRA_PHOTO_URL, photoUrl);
         fragment.setArguments(bundle);
         return fragment;
     }

@@ -49,6 +49,8 @@ import com.tumblr.jumblr.types.VideoPost;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
+
 /**
  * @author ugo
  */
@@ -145,10 +147,10 @@ public class PostDetailFragment extends Fragment {
                 // Log the event
                 HashMap<String, String> eventParams = new HashMap<>(2);
                 eventParams.put(
-                        FeedApplication.yahooAD.PARAM_ARTICLE_ORIGIN, mPost.getBlogName());
-                eventParams.put(FeedApplication.yahooAD.PARAM_ARTICLE_TYPE, mPost.getType());
-                FeedApplication.yahooAD.logEvent(
-                        FeedApplication.yahooAD.EVENT_CAR_MOREIMG_CLICK, eventParams, false);
+                        yahooAD.PARAM_ARTICLE_ORIGIN, mPost.getBlogName());
+                eventParams.put(yahooAD.PARAM_ARTICLE_TYPE, mPost.getType());
+                yahooAD.logEvent(
+                        yahooAD.EVENT_CAR_MOREIMG_CLICK, eventParams, false);
 
         }
         return super.onOptionsItemSelected(item);
@@ -251,10 +253,10 @@ public class PostDetailFragment extends Fragment {
                         public void onClick(View v) {
                             HashMap<String, String> eventParams = new HashMap<>(2);
                             eventParams.put(
-                                    FeedApplication.yahooAD.PARAM_ARTICLE_ORIGIN, mPost.getBlogName());
-                            eventParams.put(FeedApplication.yahooAD.PARAM_ARTICLE_TYPE, mPost.getType());
-                            FeedApplication.yahooAD.logEvent(
-                                    FeedApplication.yahooAD.EVENT_CAR_MOREIMG_CLICK, eventParams, false);
+                                    yahooAD.PARAM_ARTICLE_ORIGIN, mPost.getBlogName());
+                            eventParams.put(yahooAD.PARAM_ARTICLE_TYPE, mPost.getType());
+                            yahooAD.logEvent(
+                                    yahooAD.EVENT_CAR_MOREIMG_CLICK, eventParams, false);
                             
                             mCallbackHandler.onPostImagesSelected(
                                     ((PhotoPost) mPost).getPhotos(), mPostImageView);

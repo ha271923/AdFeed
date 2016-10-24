@@ -38,8 +38,11 @@ import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.QuotePost;
 import com.tumblr.jumblr.types.TextPost;
 import com.tumblr.jumblr.types.VideoPost;
+import com.yahoo.mobile.client.android.yodel.utils.SMLog;
 
 import java.util.List;
+
+import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 
 public class PostListAdapter extends BaseAdapter {
 
@@ -249,8 +252,8 @@ public class PostListAdapter extends BaseAdapter {
             }
 
         } catch (Exception e) {
-            Log.i(LOG_TAG, "Exception in fetching an Ad");
-            AnalyticsHelper.logError(LOG_TAG, "Exception in fetching an ad", e);
+            SMLog.i(LOG_TAG, "Exception in fetching an Ad");
+            yahooAD.logError(LOG_TAG, "Exception in fetching an ad", e);
         }
     }
 

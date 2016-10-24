@@ -33,6 +33,11 @@ import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.R;
 import com.tumblr.jumblr.types.Post;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
+import com.yahoo.mobile.client.android.yodel.utils.SMLog;
+
+import java.util.HashMap;
+
+import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 
 public class MainActivity extends ActionBarActivity implements PostListFragment.Callbacks {
 
@@ -86,8 +91,8 @@ public class MainActivity extends ActionBarActivity implements PostListFragment.
             searchView.setOnSearchClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FeedApplication.yahooAD.logEvent(
-                            FeedApplication.yahooAD.EVENT_STREAM_SEARCH_CLICK, null, false);
+                    yahooAD.logEvent(
+                            yahooAD.EVENT_STREAM_SEARCH_CLICK, null, false);
                 }
             });
         }
@@ -95,14 +100,14 @@ public class MainActivity extends ActionBarActivity implements PostListFragment.
         menu.findItem(R.id.action_load_AD).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Log.i("Hawk","onMenuItemClick --> Load AD");
+                SMLog.i("Hawk","onMenuItemClick --> Load AD");
                 return false;
             }
         });
         menu.findItem(R.id.action_unload_AD).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Log.i("Hawk","onMenuItemClick --> UnLoad AD");
+                SMLog.i("Hawk","onMenuItemClick --> UnLoad AD");
                 return false;
             }
         });
@@ -113,8 +118,11 @@ public class MainActivity extends ActionBarActivity implements PostListFragment.
 
     @Override
     public void onPostSelected(Post post, int positionId, View clickedView) {
-
-        FeedApplication.yahooAD.onPostSelected_LogEvent(post,positionId,clickedView);
+        // log user event
+        HashMap<String, String> eventParams = new HashMap<>(2);
+        eventParams.put(yahooAD.PARAM_ARTICLE_ORIGIN, post.getBlogName());
+        eventParams.put(yahooAD.PARAM_ARTICLE_TYPE, post.getType());
+        yahooAD.logEvent(yahooAD.EVENT_STREAM_ARTICLE_CLICK, eventParams, false);
 
         Intent intent = new Intent(this, PostDetailActivity.class);
         intent.putExtra(PostDetailActivity.EXTRA_CURRENT_PAGE_INDEX, positionId);

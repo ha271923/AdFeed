@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.yahoo.mobile.client.android.yodel.R;
+import com.yahoo.mobile.client.android.yodel.platform.YahooAD;
 import com.yahoo.mobile.client.android.yodel.ui.widgets.CaptionViewPagerIndicator;
 import com.yahoo.mobile.client.android.yodel.ui.widgets.adapters.GalleryPagerAdapter;
 import com.google.gson.Gson;
@@ -42,7 +43,6 @@ import com.tumblr.jumblr.types.Photo;
 import java.util.List;
 
 public class ImageGalleryActivity extends ActionBarActivity {
-    public static final String EXTRA_PHOTO_LIST = "com.yahoo.mobile.sample.extra.photolist";
 
     private final static int HIDE_DELAY = 3000; // 3 seconds
     private GalleryPagerAdapter mGalleryPagerAdapter;
@@ -69,7 +69,7 @@ public class ImageGalleryActivity extends ActionBarActivity {
             getWindow().setStatusBarColor(getResources().getColor(android.R.color.black));
         }
 
-        final List<Photo> photos = new Gson().fromJson(getIntent().getStringExtra(EXTRA_PHOTO_LIST),
+        final List<Photo> photos = new Gson().fromJson(getIntent().getStringExtra(YahooAD.EXTRA_PHOTO_LIST),
                 new TypeToken<List<Photo>>() {
                 }.getType());
         mGalleryPagerAdapter = new GalleryPagerAdapter(getSupportFragmentManager(), photos);

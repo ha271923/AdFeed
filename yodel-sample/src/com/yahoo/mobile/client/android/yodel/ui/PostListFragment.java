@@ -41,10 +41,13 @@ import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
 import com.yahoo.mobile.client.android.yodel.utils.PostDataLoader;
 import com.yahoo.mobile.client.android.yodel.ui.widgets.adapters.PostListAdapter;
 import com.tumblr.jumblr.types.Post;
+import com.yahoo.mobile.client.android.yodel.utils.SMLog;
 import com.yahoo.mobile.client.share.search.ui.activity.SearchActivity;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 
 /**
  * The list fragment containing Tumblr blog posts.
@@ -75,7 +78,7 @@ public class PostListFragment extends ListFragment
     static PostListFragment newInstance(String tagQuery) {
         PostListFragment fragment = new PostListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(FeedApplication.yahooAD.EXTRA_TAG_QUERY, tagQuery);
+        bundle.putString(yahooAD.EXTRA_TAG_QUERY, tagQuery);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -88,7 +91,7 @@ public class PostListFragment extends ListFragment
         if (savedInstanceState == null) {
             Bundle args = getArguments();
             if (args != null) {
-                mTagQuery = args.getString(FeedApplication.yahooAD.EXTRA_TAG_QUERY);
+                mTagQuery = args.getString(yahooAD.EXTRA_TAG_QUERY);
             }
         }
     }
@@ -106,7 +109,7 @@ public class PostListFragment extends ListFragment
             @Override
             public void onRefresh() {
                 // Log a timed event
-                FeedApplication.yahooAD.logEvent(FeedApplication.yahooAD.EVENT_STREAM_PULL_REFRESH, null, true);
+                yahooAD.logEvent(yahooAD.EVENT_STREAM_PULL_REFRESH, null, true);
                 mSwipeView.setRefreshing(true);
                 refreshPosts();
             }
@@ -205,9 +208,9 @@ public class PostListFragment extends ListFragment
                 if (position + 1 > mPostSearchListAdapter.getCount()) {
                     // The search footer was clicked. Log the event and open the Search SDK
                     HashMap<String, String> eventParam = new HashMap<>(1);
-                    eventParam.put(FeedApplication.yahooAD.PARAM_SEARCH_TERM, mTagQuery);
-                    FeedApplication.yahooAD.logEvent(
-                            FeedApplication.yahooAD.EVENT_SEARCH_MOREONWEB_CLICK, eventParam, false);
+                    eventParam.put(yahooAD.PARAM_SEARCH_TERM, mTagQuery);
+                    yahooAD.logEvent(
+                            yahooAD.EVENT_SEARCH_MOREONWEB_CLICK, eventParam, false);
                     
                     Intent i = new Intent(getActivity(), SearchActivity.class);
                     i.putExtra(SearchActivity.QUERY_STRING, mTagQuery);
@@ -261,8 +264,8 @@ public class PostListFragment extends ListFragment
         }
         if (mSwipeView.isRefreshing()) {
             HashMap<String, String> eventParams = new HashMap<>(1);
-            eventParams.put(FeedApplication.yahooAD.PARAM_CONTENT_LOADED, String.valueOf(contentLoaded));
-            AnalyticsHelper.endTimedEvent(AnalyticsHelper.EVENT_STREAM_PULL_REFRESH, eventParams);
+            eventParams.put(yahooAD.PARAM_CONTENT_LOADED, String.valueOf(contentLoaded));
+            yahooAD.endTimedEvent(yahooAD.EVENT_STREAM_PULL_REFRESH, eventParams);
             mSwipeView.setRefreshing(false);
         }
     }
@@ -283,7 +286,7 @@ public class PostListFragment extends ListFragment
     }
 
     private void refreshPosts() {
-        Log.d(LOG_TAG, "Refreshing post list...");
+        SMLog.d(LOG_TAG, "Refreshing post list...");
         if (mTagQuery == null) {
             getActivity().getSupportLoaderManager()
                     .restartLoader(LOADER_ID_LOAD_RECENT_POSTS, null, this);

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 
 import com.flurry.android.ads.FlurryAdNative;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.yahoo.mobile.client.android.yodel.utils.SMLog;
 
 import java.util.Map;
@@ -16,13 +18,18 @@ import static com.yahoo.mobile.client.android.yodel.platform.YahooAD.EVENT_STREA
 
 public class LogAD {
 
-    public static YahooAD yahooAD;
+    private static YahooAD yahooAD;
+    private static GoogleAnalyticsAD googleAD;
 
     static public void InitAdServer(Context context){
         // TODO:
         if(yahooAD==null){
             yahooAD = new YahooAD();
             yahooAD.InitAdServer(context);
+        }
+        if(googleAD==null){
+            googleAD = new GoogleAnalyticsAD();
+            googleAD.InitAdServer(context);
         }
 
     }
@@ -49,7 +56,9 @@ public class LogAD {
         if(whichVendor(eventName)==Vendors.Yahoo)
             yahooAD.logEvent(eventName, eventParams, timed);
     }
-
+    static public void logScreen(String screenName){
+            googleAD.logScreen(screenName);
+    }
     private enum Vendors {
         Unknown,
         Yahoo,

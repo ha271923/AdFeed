@@ -124,6 +124,7 @@ public class MainActivity extends ActionBarActivity implements PostListFragment.
         eventParams.put(YahooAD.PARAM_ARTICLE_ORIGIN, post.getBlogName());
         eventParams.put(YahooAD.PARAM_ARTICLE_TYPE, post.getType());
         LogAD.logEvent(YahooAD.EVENT_STREAM_ARTICLE_CLICK, eventParams, false);
+        LogAD.logScreen(post.getBlogName());
 
         Intent intent = new Intent(this, PostDetailActivity.class);
         intent.putExtra(PostDetailActivity.EXTRA_CURRENT_PAGE_INDEX, positionId);

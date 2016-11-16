@@ -32,12 +32,13 @@ import android.view.View;
 import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.R;
 import com.tumblr.jumblr.types.Post;
+import com.yahoo.mobile.client.android.yodel.platform.LogAD;
+import com.yahoo.mobile.client.android.yodel.platform.YahooAD;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
 import com.yahoo.mobile.client.android.yodel.utils.SMLog;
 
 import java.util.HashMap;
 
-import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 
 public class MainActivity extends ActionBarActivity implements PostListFragment.Callbacks {
 
@@ -91,8 +92,8 @@ public class MainActivity extends ActionBarActivity implements PostListFragment.
             searchView.setOnSearchClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    yahooAD.logEvent(
-                            yahooAD.EVENT_STREAM_SEARCH_CLICK, null, false);
+                    LogAD.logEvent(
+                            YahooAD.EVENT_STREAM_SEARCH_CLICK, null, false);
                 }
             });
         }
@@ -120,9 +121,9 @@ public class MainActivity extends ActionBarActivity implements PostListFragment.
     public void onPostSelected(Post post, int positionId, View clickedView) {
         // log user event
         HashMap<String, String> eventParams = new HashMap<>(2);
-        eventParams.put(yahooAD.PARAM_ARTICLE_ORIGIN, post.getBlogName());
-        eventParams.put(yahooAD.PARAM_ARTICLE_TYPE, post.getType());
-        yahooAD.logEvent(yahooAD.EVENT_STREAM_ARTICLE_CLICK, eventParams, false);
+        eventParams.put(YahooAD.PARAM_ARTICLE_ORIGIN, post.getBlogName());
+        eventParams.put(YahooAD.PARAM_ARTICLE_TYPE, post.getType());
+        LogAD.logEvent(YahooAD.EVENT_STREAM_ARTICLE_CLICK, eventParams, false);
 
         Intent intent = new Intent(this, PostDetailActivity.class);
         intent.putExtra(PostDetailActivity.EXTRA_CURRENT_PAGE_INDEX, positionId);

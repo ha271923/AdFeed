@@ -31,11 +31,12 @@ import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.R;
 
 import com.tumblr.jumblr.types.Post;
+import com.yahoo.mobile.client.android.yodel.platform.LogAD;
+import com.yahoo.mobile.client.android.yodel.platform.YahooAD;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
 
 import java.util.HashMap;
 
-import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 
 public class PostSearchActivity extends ActionBarActivity implements PostListFragment.Callbacks {
     @Override
@@ -55,8 +56,8 @@ public class PostSearchActivity extends ActionBarActivity implements PostListFra
             String searchQuery = intent.getStringExtra(SearchManager.QUERY);
 
             HashMap<String, String> eventParam = new HashMap<>(1);
-            eventParam.put(yahooAD.PARAM_SEARCH_TERM, searchQuery);
-            yahooAD.logEvent(yahooAD.EVENT_SEARCH_STARTED, eventParam, false);
+            eventParam.put(YahooAD.PARAM_SEARCH_TERM, searchQuery);
+            LogAD.logEvent(YahooAD.EVENT_SEARCH_STARTED, eventParam, false);
 
             doTumblrTagSearch(searchQuery);
             setTitle(Html.fromHtml(getString(R.string.title_search_query, searchQuery)));
@@ -73,9 +74,9 @@ public class PostSearchActivity extends ActionBarActivity implements PostListFra
     public void onPostSelected(Post post, int positionId, View clickedView) {
         // Log the event
         HashMap<String, String> eventParams = new HashMap<>(2);
-        eventParams.put(yahooAD.PARAM_ARTICLE_ORIGIN, post.getBlogName());
-        eventParams.put(yahooAD.PARAM_ARTICLE_TYPE, post.getType());
-        yahooAD.logEvent(yahooAD.EVENT_SEARCH_RESULT_CLICK, eventParams, false);
+        eventParams.put(YahooAD.PARAM_ARTICLE_ORIGIN, post.getBlogName());
+        eventParams.put(YahooAD.PARAM_ARTICLE_TYPE, post.getType());
+        LogAD.logEvent(YahooAD.EVENT_SEARCH_RESULT_CLICK, eventParams, false);
         
         /*
          To avoid a StackOverflowError from a circular reference during serialization, set the

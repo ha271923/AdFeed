@@ -36,6 +36,8 @@ import android.widget.ListView;
 
 import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.R;
+import com.yahoo.mobile.client.android.yodel.platform.LogAD;
+import com.yahoo.mobile.client.android.yodel.platform.YahooAD;
 import com.yahoo.mobile.client.android.yodel.ui.widgets.adapters.PostSearchListAdapter;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
 import com.yahoo.mobile.client.android.yodel.utils.PostDataLoader;
@@ -47,7 +49,6 @@ import com.yahoo.mobile.client.share.search.ui.activity.SearchActivity;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 
 /**
  * The list fragment containing Tumblr blog posts.
@@ -78,7 +79,7 @@ public class PostListFragment extends ListFragment
     static PostListFragment newInstance(String tagQuery) {
         PostListFragment fragment = new PostListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(yahooAD.EXTRA_TAG_QUERY, tagQuery);
+        bundle.putString(YahooAD.EXTRA_TAG_QUERY, tagQuery);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -91,7 +92,7 @@ public class PostListFragment extends ListFragment
         if (savedInstanceState == null) {
             Bundle args = getArguments();
             if (args != null) {
-                mTagQuery = args.getString(yahooAD.EXTRA_TAG_QUERY);
+                mTagQuery = args.getString(YahooAD.EXTRA_TAG_QUERY);
             }
         }
     }
@@ -109,7 +110,7 @@ public class PostListFragment extends ListFragment
             @Override
             public void onRefresh() {
                 // Log a timed event
-                yahooAD.logEvent(yahooAD.EVENT_STREAM_PULL_REFRESH, null, true);
+                LogAD.logEvent(YahooAD.EVENT_STREAM_PULL_REFRESH, null, true);
                 mSwipeView.setRefreshing(true);
                 refreshPosts();
             }
@@ -208,9 +209,9 @@ public class PostListFragment extends ListFragment
                 if (position + 1 > mPostSearchListAdapter.getCount()) {
                     // The search footer was clicked. Log the event and open the Search SDK
                     HashMap<String, String> eventParam = new HashMap<>(1);
-                    eventParam.put(yahooAD.PARAM_SEARCH_TERM, mTagQuery);
-                    yahooAD.logEvent(
-                            yahooAD.EVENT_SEARCH_MOREONWEB_CLICK, eventParam, false);
+                    eventParam.put(YahooAD.PARAM_SEARCH_TERM, mTagQuery);
+                    LogAD.logEvent(
+                            YahooAD.EVENT_SEARCH_MOREONWEB_CLICK, eventParam, false);
                     
                     Intent i = new Intent(getActivity(), SearchActivity.class);
                     i.putExtra(SearchActivity.QUERY_STRING, mTagQuery);
@@ -264,8 +265,8 @@ public class PostListFragment extends ListFragment
         }
         if (mSwipeView.isRefreshing()) {
             HashMap<String, String> eventParams = new HashMap<>(1);
-            eventParams.put(yahooAD.PARAM_CONTENT_LOADED, String.valueOf(contentLoaded));
-            yahooAD.endTimedEvent(yahooAD.EVENT_STREAM_PULL_REFRESH, eventParams);
+            eventParams.put(YahooAD.PARAM_CONTENT_LOADED, String.valueOf(contentLoaded));
+            LogAD.endTimedEvent(YahooAD.EVENT_STREAM_PULL_REFRESH, eventParams);
             mSwipeView.setRefreshing(false);
         }
     }

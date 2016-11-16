@@ -29,6 +29,7 @@ import com.flurry.android.ads.FlurryAdNative;
 import com.flurry.android.ads.FlurryAdNativeAsset;
 import com.yahoo.mobile.client.android.yodel.R;
 import com.yahoo.mobile.client.android.yodel.feed.TumblrFeedManager;
+import com.yahoo.mobile.client.android.yodel.platform.LogAD;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
 import com.yahoo.mobile.client.android.yodel.utils.DateTimeUtil;
 import com.yahoo.mobile.client.android.yodel.utils.ImageLoader;
@@ -42,7 +43,6 @@ import com.yahoo.mobile.client.android.yodel.utils.SMLog;
 
 import java.util.List;
 
-import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 
 public class PostListAdapter extends BaseAdapter {
 
@@ -253,7 +253,7 @@ public class PostListAdapter extends BaseAdapter {
 
         } catch (Exception e) {
             SMLog.i(LOG_TAG, "Exception in fetching an Ad");
-            yahooAD.logError(LOG_TAG, "Exception in fetching an ad", e);
+            LogAD.logError(LOG_TAG, "Exception in fetching an ad", e);
         }
     }
 

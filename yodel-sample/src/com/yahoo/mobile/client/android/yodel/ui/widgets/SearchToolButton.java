@@ -29,12 +29,13 @@ import android.widget.TextView;
 
 import com.yahoo.mobile.client.android.yodel.FeedApplication;
 import com.yahoo.mobile.client.android.yodel.R;
+import com.yahoo.mobile.client.android.yodel.platform.LogAD;
+import com.yahoo.mobile.client.android.yodel.platform.YahooAD;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
 import com.yahoo.mobile.client.share.search.ui.activity.SearchActivity;
 
 import java.util.HashMap;
 
-import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 
 public class SearchToolButton extends LinearLayout implements View.OnClickListener {
 
@@ -67,8 +68,8 @@ public class SearchToolButton extends LinearLayout implements View.OnClickListen
     @Override
     public void onClick(View v) {
         HashMap<String, String> eventParam = new HashMap<>(1);
-        eventParam.put(yahooAD.PARAM_SEARCH_TERM, getSearchTerm().toString());
-        yahooAD.logEvent(yahooAD.EVENT_CAR_LEARNMORE_CLICK, eventParam, false);
+        eventParam.put(YahooAD.PARAM_SEARCH_TERM, getSearchTerm().toString());
+        LogAD.logEvent(YahooAD.EVENT_CAR_LEARNMORE_CLICK, eventParam, false);
         
         Intent i = new Intent(getContext(),
                 SearchActivity.class);

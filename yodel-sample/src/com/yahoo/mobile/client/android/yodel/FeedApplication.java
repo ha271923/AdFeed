@@ -23,14 +23,13 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.yahoo.mobile.client.android.yodel.platform.AdInterface;
-import com.yahoo.mobile.client.android.yodel.platform.YahooAD;
+import com.yahoo.mobile.client.android.yodel.platform.LogAD;
 
 
 public class FeedApplication extends Application implements AdInterface {
 
     private static FeedApplication sApplication;
     private Handler mMainThreadHandler;
-    public static YahooAD yahooAD;
 
     @Override
     public void onCreate() {
@@ -51,8 +50,7 @@ public class FeedApplication extends Application implements AdInterface {
     @Override
     public void initServer(Context context) {
 
-        yahooAD = new YahooAD();
-        yahooAD.InitAdServer(context);
+        LogAD.InitAdServer(context);
 
     }
 

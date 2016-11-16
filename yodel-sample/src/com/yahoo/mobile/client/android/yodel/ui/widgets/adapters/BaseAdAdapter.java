@@ -22,10 +22,10 @@ import android.view.View;
 import com.flurry.android.ads.FlurryAdNative;
 import com.flurry.android.ads.FlurryAdNativeAsset;
 import com.yahoo.mobile.client.android.yodel.NativeAdFetcher;
+import com.yahoo.mobile.client.android.yodel.platform.LogAD;
 
 import java.util.List;
 
-import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 
 /**
  * Adapter that has common functionality for any adapters that need to show ads in-between
@@ -135,7 +135,7 @@ abstract class BaseAdAdapter implements NativeAdFetcher.AdNativeListener {
      * @param view the {@link View} to load the asset into
      */
     protected void loadAdAssetInView(FlurryAdNative adNative, String assetName, View view) {
-        yahooAD.loadAdAssetInView(adNative,assetName,view);
+        LogAD.loadAdAssetInView(adNative,assetName,view);
     }
 
     /**

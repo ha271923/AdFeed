@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by ha271 on 2016/10/21.
  */
 
-public class YahooAD {
+public class YahooAD extends BaseAD {
     private static String LOG_TAG = FeedApplication.class.getSimpleName();
     private static final String FLURRY_APIKEY = "JQVT87W7TGN5W7SWY2FH";
     public  static final String FLURRY_ADSPACE = "StaticVideoNativeTest";
@@ -47,7 +47,7 @@ public class YahooAD {
     public static final String PARAM_SEARCH_TERM = "search_term";
     public static final String EXTRA_PHOTO_URL = "com.yahoo.mobile.sample.extra.photourl";
     public static final String EXTRA_PHOTO_LIST = "com.yahoo.mobile.sample.extra.photolist";
-
+    @Override
     public void InitAdServer(Context context){
         // Init Search SDK
         SearchSDKSettings.initializeSearchSDKSettings(
@@ -70,18 +70,16 @@ public class YahooAD {
             FlurryAgent.init(context, FLURRY_APIKEY);
     }
 
-    public static void logEvent(String eventName, Map<String, String> eventParams, boolean timed){
-        AnalyticsHelper.logEvent(eventName, eventParams, timed);
-    }
 
-    public static void logError(String errorId, String errorDescription, Throwable throwable) {
+    @Override
+    public void logError(String errorId, String errorDescription, Throwable throwable) {
         FlurryAgent.onError(errorId, errorDescription, throwable);
     }
-
-    public static void endTimedEvent(String eventName, Map<String, String> eventParams) {
+    @Override
+    public void endTimedEvent(String eventName, Map<String, String> eventParams) {
         AnalyticsHelper.endTimedEvent(eventName, eventParams);
     }
-
+    @Override
     public void loadAdAssetInView(FlurryAdNative adNative, String assetName, View view) {
         FlurryAdNativeAsset adNativeAsset = adNative.getAsset(assetName);
         if (adNativeAsset != null) {
@@ -91,4 +89,8 @@ public class YahooAD {
         }
     }
 
+    @Override
+    public void logEvent(String eventName, Map<String, String> eventParams, boolean timed) {
+        AnalyticsHelper.logEvent(eventName, eventParams, timed);
+    }
 }

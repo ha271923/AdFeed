@@ -23,6 +23,8 @@ import com.flurry.android.ads.FlurryAdErrorType;
 import com.flurry.android.ads.FlurryAdNative;
 import com.flurry.android.ads.FlurryAdNativeListener;
 import com.flurry.android.ads.FlurryAdTargeting;
+import com.yahoo.mobile.client.android.yodel.platform.LogAD;
+import com.yahoo.mobile.client.android.yodel.platform.YahooAD;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
 import com.yahoo.mobile.client.android.yodel.utils.SMLog;
 
@@ -32,7 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 import static com.yahoo.mobile.client.android.yodel.platform.YahooAD.FLURRY_ADSPACE;
 
 /**
@@ -78,7 +79,7 @@ public class NativeAdFetcher {
 
         @Override
         public void onCloseFullscreen(FlurryAdNative adNative) {
-            yahooAD.logEvent(yahooAD.EVENT_AD_CLOSEBUTTON_CLICK, null, false);
+            LogAD.logEvent(YahooAD.EVENT_AD_CLOSEBUTTON_CLICK, null, false);
         }
 
         @Override
@@ -86,7 +87,7 @@ public class NativeAdFetcher {
 
         @Override
         public void onClicked(FlurryAdNative adNative) {
-            yahooAD.logEvent(yahooAD.EVENT_STREAM_AD_CLICK, null, false);
+            LogAD.logEvent(YahooAD.EVENT_STREAM_AD_CLICK, null, false);
         }
 
         @Override

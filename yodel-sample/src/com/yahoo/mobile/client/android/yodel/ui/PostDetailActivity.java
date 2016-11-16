@@ -31,6 +31,8 @@ import android.view.View;
 
 import com.yahoo.mobile.client.android.yodel.R;
 import com.yahoo.mobile.client.android.yodel.feed.TumblrFeedManager;
+import com.yahoo.mobile.client.android.yodel.platform.LogAD;
+import com.yahoo.mobile.client.android.yodel.platform.YahooAD;
 import com.yahoo.mobile.client.android.yodel.utils.AnalyticsHelper;
 import com.yahoo.mobile.client.android.yodel.utils.PostDataLoader;
 import com.yahoo.mobile.client.android.yodel.ui.widgets.adapters.PostDetailPagerAdapter;
@@ -40,7 +42,6 @@ import com.tumblr.jumblr.types.Post;
 
 import java.util.List;
 
-import static com.yahoo.mobile.client.android.yodel.FeedApplication.yahooAD;
 
 /**
  * @author ugo
@@ -61,7 +62,7 @@ public class PostDetailActivity extends ActionBarActivity
 
                 @Override
                 public void onPageSelected(int position) {
-                    yahooAD.logEvent(yahooAD.EVENT_CAR_CONTENT_SWIPE, null, false);
+                    LogAD.logEvent(YahooAD.EVENT_CAR_CONTENT_SWIPE, null, false);
                 }
 
                 @Override
@@ -200,7 +201,7 @@ public class PostDetailActivity extends ActionBarActivity
         Intent intent = new Intent(this, ImageGalleryActivity.class);
         // Because Photo objects are not parcelable, we serialize to JSON to pass between activities
         String photoListJson = new Gson().toJson(imagesToShow);
-        intent.putExtra(yahooAD.EXTRA_PHOTO_LIST, photoListJson);
+        intent.putExtra(YahooAD.EXTRA_PHOTO_LIST, photoListJson);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptions options = ActivityOptions

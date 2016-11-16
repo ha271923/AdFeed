@@ -8,6 +8,8 @@ repositories {
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // Yahoo AD
     compile 'com.flurry.android:ads:6.2.0'
     compile 'com.yahoo.mobile.client.share.search:YahooSearch-0.1.0-with-volley@aar'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3' // Used by YSearch
@@ -15,9 +17,11 @@ dependencies {
 
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
-    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.google.android.gms:play-services-ads:9.0.0'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.code.gson:gson:2.4'
+    // Google Analytics
+    compile 'com.google.android.gms:play-services-analytics:9.0.0'
 }
 
 android {

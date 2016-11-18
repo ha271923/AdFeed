@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // compile fileTree(dir: 'libs', include: ['*.jar'])
     // Yahoo AD
     compile 'com.flurry.android:ads:6.2.0'
     compile 'com.yahoo.mobile.client.share.search:YahooSearch-0.1.0-with-volley@aar'

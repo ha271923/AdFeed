@@ -18,12 +18,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by ha271 on 2016/10/21.
+ * Start to learn Yahoo Flurry:
+ * https://developer.yahoo.com/flurry/docs/integrateflurry/android/
+ *
+ * GA Account: hawk_wei@htc.com
+ * @See <a href="https://y.flurry.com/metrics/1"> Manage Yahoo Flurry </a>
  */
 
 public class YahooAD extends BaseAD {
     private static String LOG_TAG = FeedApplication.class.getSimpleName();
-    private static final String FLURRY_APIKEY = "JQVT87W7TGN5W7SWY2FH";
+    private static final String FLURRY_APIKEY = "KVP8YVG8TWB6J7TZBCB9";
     public  static final String FLURRY_ADSPACE = "StaticVideoNativeTest";
     public  static final String YAHOO_SEARCH_APIKEY = "your_api_key";
     public  static final String EXTRA_TAG_QUERY = "com.yahoo.mobile.sample.extra.tagquery";

@@ -22,6 +22,9 @@ import java.util.Map;
 /**
  * Start to learn Google Analytics:
  * https://developers.google.com/analytics/devguides/collection/android/v4/start
+ *
+ * GA Account: hawk_wei@htc.com
+ * @See <a href="https://analytics.google.com/analytics/web/"> Manage GoogleAnalytics </a>
  */
 
 public class GoogleAnalyticsAD extends BaseAD {

@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "811530658852",
+    "project_id": "yodel-sample"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811530658852:android:a2146a464e4fa369",
+        "android_client_info": {
+          "package_name": "com.yahoo.mobile.client.android.yodel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRQUH9qSXGslHFRv-SsOjOomgF4gdXllI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-77914420-2"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
